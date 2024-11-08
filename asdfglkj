@@ -1,0 +1,93 @@
+repeat wait() until game:IsLoaded()
+wait(2)
+
+local ScreenGui = Instance.new("ScreenGui")
+local Fps = Instance.new("TextLabel")
+local Ping = Instance.new("TextLabel")
+local UICornerFps = Instance.new("UICorner")
+local UICornerPing = Instance.new("UICorner")
+local UIGradientFps = Instance.new("UIGradient")
+local UIGradientPing = Instance.new("UIGradient")
+local DropShadowFps = Instance.new("ImageLabel")
+local DropShadowPing = Instance.new("ImageLabel")
+
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+DropShadowFps.Name = "DropShadowFps"
+DropShadowFps.Parent = ScreenGui
+DropShadowFps.BackgroundTransparency = 1.000
+DropShadowFps.Position = UDim2.new(0.786, 0, 0, 0)
+DropShadowFps.Size = UDim2.new(0, 140, 0, 30)
+DropShadowFps.Image = "rbxassetid://1316045217"
+DropShadowFps.ImageColor3 = Color3.fromRGB(0, 0, 0)
+DropShadowFps.ImageTransparency = 0.6
+DropShadowFps.ScaleType = Enum.ScaleType.Slice
+DropShadowFps.SliceCenter = Rect.new(10, 10, 118, 118)
+
+Fps.Name = "Fps"
+Fps.Parent = ScreenGui
+Fps.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Fps.BackgroundTransparency = 0.500
+Fps.Position = UDim2.new(0.786138654, 0, 0, 0)
+Fps.Size = UDim2.new(0, 130, 0, 25)
+Fps.Font = Enum.Font.GothamBold
+Fps.TextColor3 = Color3.fromRGB(255, 255, 255)
+Fps.TextScaled = true
+Fps.TextSize = 14.000
+Fps.TextWrapped = true
+
+UICornerFps.Parent = Fps
+UICornerFps.CornerRadius = UDim.new(0, 12)
+
+UIGradientFps.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 200, 255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 255, 150))
+}
+UIGradientFps.Rotation = 90
+UIGradientFps.Parent = Fps
+
+DropShadowPing.Name = "DropShadowPing"
+DropShadowPing.Parent = ScreenGui
+DropShadowPing.BackgroundTransparency = 1.000
+DropShadowPing.Position = UDim2.new(0.7, 0, 0, 0)
+DropShadowPing.Size = UDim2.new(0, 140, 0, 30)
+DropShadowPing.Image = "rbxassetid://1316045217"
+DropShadowPing.ImageColor3 = Color3.fromRGB(0, 0, 0)
+DropShadowPing.ImageTransparency = 0.6
+DropShadowPing.ScaleType = Enum.ScaleType.Slice
+DropShadowPing.SliceCenter = Rect.new(10, 10, 118, 118)
+
+Ping.Name = "Ping"
+Ping.Parent = ScreenGui
+Ping.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Ping.BackgroundTransparency = 0.500
+Ping.Position = UDim2.new(0.700000048, 0, 0, 0)
+Ping.Size = UDim2.new(0, 130, 0, 25)
+Ping.Font = Enum.Font.GothamBold
+Ping.TextColor3 = Color3.fromRGB(255, 255, 255)
+Ping.TextScaled = true
+Ping.TextSize = 14.000
+Ping.TextWrapped = true
+
+UICornerPing.Parent = Ping
+UICornerPing.CornerRadius = UDim.new(0, 12)
+
+UIGradientPing.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 150, 150)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 220, 0))
+}
+UIGradientPing.Rotation = 90
+UIGradientPing.Parent = Ping
+
+local fpsScript = Instance.new('LocalScript', Fps)
+local RunService = game:GetService("RunService")
+RunService.RenderStepped:Connect(function(frame)
+    fpsScript.Parent.Text = ("FPS: " .. math.round(1/frame))
+end)
+
+local pingScript = Instance.new('LocalScript', Ping)
+local Stats = game:GetService("Stats")
+RunService.RenderStepped:Connect(function()
+    pingScript.Parent.Text = ("Ping: " .. Stats.Network.ServerStatsItem["Data Ping"]:GetValueString())
+end)
